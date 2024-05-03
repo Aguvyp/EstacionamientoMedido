@@ -14,5 +14,12 @@ namespace EstacionamientoMedido.Modelos
         public int PrecioHora { get; set; }
         public Vehiculo VehiculoEstacionado { get; set; }
         public int TotalEstacionamiento { get; set; }
+
+
+        public Estacionamiento() 
+        { 
+            Entrada = DateTime.Now;
+            PrecioHora = 3500;
+        }
     }
 }

@@ -9,6 +9,7 @@ namespace EstacionamientoMedido.Modelos
     public class PlazaEstacionamiento
     {
         public string Nombre { get; set; }
+        public bool Disponible { get; set; }
 
     }
 }

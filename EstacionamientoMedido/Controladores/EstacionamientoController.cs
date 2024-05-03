@@ -16,7 +16,7 @@ namespace EstacionamientoMedido.Controladores
             repo.Estacionamientos.Add(e);
         }
 
-        public List<Estacionamiento> ObtenerEstacionamiento(Estacionamiento e)
+        public List<Estacionamiento> ObtenerEstacionamiento()
         {
             return repo.Estacionamientos;
         }
