@@ -19,7 +19,8 @@ void Menu()
     Console.WriteLine("4. Mostrar vehiculos registrados");
     Console.WriteLine("-----------------------------------");
     Console.WriteLine("5. Iniciar estacionamiento");
-    Console.WriteLine("6. Cerrar");
+    Console.WriteLine("6. Finalizar estacionamiento");
+    Console.WriteLine("7. Cerrar");
     Console.WriteLine();
     Console.Write("Opcion: ");
     eleccion = int.Parse(Console.ReadLine());
@@ -62,6 +63,13 @@ void Menu()
            // Console.WriteLine($"Plaza: {estacionamientoTemporal.PlazaEstacionamiento.Nombre} | Patente: {estacionamientoTemporal.VehiculoEstacionado.Patente} | Dueño: {estacionamientoTemporal.VehiculoEstacionado.Cliente.Apellido}, {estacionamientoTemporal.VehiculoEstacionado.Cliente.Nombre} | Telefono: {estacionamientoTemporal.VehiculoEstacionado.Cliente.Telefono} \n" +
            //$"Marca: {estacionamientoTemporal.VehiculoEstacionado.Marca} | Modelo: {estacionamientoTemporal.VehiculoEstacionado.Modelo} | Color: {estacionamientoTemporal.VehiculoEstacionado.Color}");
            Console.WriteLine();
+            Menu();
+            break;
+
+        case 6:
+            List<Estacionamiento>estacionamientosIniciados = estacionamientoController.ObtenerEstacionamiento();
+            FinalizarEstacionamiento(estacionamientosIniciados);
+            Console.WriteLine();    
             Menu();
             break;
 
@@ -113,13 +121,24 @@ void Menu()
         Console.Write("Pertenece a: ");
         dueñoMomentaneo = Console.ReadLine();
 
-        foreach(var item in listadoClientes)
-        {
-            if(item.Nombre == dueñoMomentaneo)
+        
+       
+            foreach (var item in listadoClientes)
             {
-                vehiculoNuevo.Cliente = item;
+                if (item.Nombre == dueñoMomentaneo)
+                {
+                    vehiculoNuevo.Cliente = item;
+                }
+
+                else
+                {
+                    Console.WriteLine("El cliente ingresado no esta registrado");
+                    break;
+                }
             }
-        }
+     
+        
+        
 
         return vehiculoNuevo;
 
@@ -128,11 +147,18 @@ void Menu()
     void MostrarVehiculosRegistrados(List<Vehiculo> listadoVehiculos)
     {
         Console.WriteLine("Lista de vehiculos registrados");
-
-        foreach( var item in listadoVehiculos)
-        {
-            Console.WriteLine($">Dueño: {item.Cliente.Nombre} - Patente: {item.Patente} - Marca: {item.Marca} - Modelo: {item.Modelo} - Color: {item.Color}");
-        }
+        
+        
+            foreach (var item in listadoVehiculos)
+            {   
+                if(item.Cliente.Nombre != null)
+                {
+                    Console.WriteLine($">Dueño: {item.Cliente.Nombre} - Patente: {item.Patente} - Marca: {item.Marca} - Modelo: {item.Modelo} - Color: {item.Color}");
+                }
+                
+            }
+       
+        
     }
 
     Estacionamiento IniciarEstacionamiento(List<Vehiculo> listadoVehiculos, List<PlazaEstacionamiento>listadoPlazaEstacionamiento)
@@ -189,4 +215,68 @@ void Menu()
         return estacionamiento;
    
     }
-}
+
+    Estacionamiento FinalizarEstacionamiento(List<Estacionamiento> listaEstacionamiento)
+    {
+        Estacionamiento estacionamiento = new Estacionamiento();
+        string patenteProvisoria;
+        
+        Console.Write("Patente del auto a finalziar estacionamiento: ");
+        patenteProvisoria = Console.ReadLine();
+
+        if( patenteProvisoria != null)
+        {
+
+            foreach( var item in listaEstacionamiento)
+            {
+                if(patenteProvisoria == item.VehiculoEstacionado.Patente)
+                {
+                    
+                    CalcularPrecioTotal(item);
+                }
+            }
+        }
+
+        return estacionamiento; 
+
+    }
+
+    void CalcularPrecioTotal(Estacionamiento estacionamiento)
+    {
+
+
+        estacionamiento.Salida = DateTime.Now;
+        TimeSpan diferenciaHorario = estacionamiento.Salida - estacionamiento.Entrada;
+        double diferenciaHoras = diferenciaHorario.TotalHours;
+        Console.WriteLine();
+
+        if(diferenciaHoras >= 1)
+        {
+            estacionamiento.TotalEstacionamiento = (int)(diferenciaHoras * estacionamiento.PrecioHora);
+        }
+        else if(diferenciaHoras < 1)
+        {
+            estacionamiento.TotalEstacionamiento = (int)(1 * estacionamiento.PrecioHora);
+        }
+
+        Console.WriteLine($"El cliente {estacionamiento.VehiculoEstacionado.Cliente.Apellido.ToUpper()}, {estacionamiento.VehiculoEstacionado.Cliente.Nombre.ToUpper()} estacionó el vehiculo patente {estacionamiento.VehiculoEstacionado.Patente.ToUpper()}.");
+        Console.WriteLine(($"Ingreso: {estacionamiento.Entrada}"));
+        Console.WriteLine($"Egreso: {estacionamiento.Salida}");
+        Console.WriteLine($"Tiempo estacionado: {diferenciaHoras}");
+        Console.WriteLine($"---- A PAGAR ----");
+        if (diferenciaHoras < 1)
+        {
+            Console.WriteLine("Usted estacionó por menos de 1hs que es el tiempo minimo, se le cobrara el basico de 1hs");
+            Console.WriteLine($"Precio por hora: {estacionamiento.PrecioHora} x 1 = ${estacionamiento.TotalEstacionamiento}");
+        }
+        else
+        {
+            Console.WriteLine($"Precio por hora: {estacionamiento.PrecioHora} x {diferenciaHoras} = ${estacionamiento.TotalEstacionamiento}");
+        }
+        
+        Console.WriteLine("********** ESTACIONAMIENTO FINALIZADO **********");
+    }
+             
+ }
+
+
