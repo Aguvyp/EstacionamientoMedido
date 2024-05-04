@@ -125,16 +125,11 @@ void Menu()
        
             foreach (var item in listadoClientes)
             {
-                if (item.Nombre == dueñoMomentaneo)
+                if(dueñoMomentaneo == item.Nombre)
                 {
                     vehiculoNuevo.Cliente = item;
                 }
-
-                else
-                {
-                    Console.WriteLine("El cliente ingresado no esta registrado");
-                    break;
-                }
+                
             }
      
         
