@@ -19,6 +19,7 @@ namespace EstacionamientoMedido.Modelos
             {
                 Nombre = "Pepe",
                 Apellido = "Gonzales",
+                DNI = "123123123",
                 Telefono = "123456",
                 Email = "notiene@gmail.com",
             });
@@ -26,6 +27,7 @@ namespace EstacionamientoMedido.Modelos
             {
                 Nombre = "Juan",
                 Apellido = "Fernandez",
+                DNI = "987654321",
                 Telefono = "654321",
                 Email = "estesitiene@gmail.com",
             });
