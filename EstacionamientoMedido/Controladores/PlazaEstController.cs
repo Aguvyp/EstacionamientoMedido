@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Channels;
 using System.Threading.Tasks;
+using EstacionamientoMedido.Helpers;
 using EstacionamientoMedido.Modelos;
 
 namespace EstacionamientoMedido.Controladores
@@ -11,14 +13,22 @@ namespace EstacionamientoMedido.Controladores
     {
         Repositorio repo = new Repositorio();
 
-        void CargarPlazaEst(PlazaEstacionamiento pe)
-        {
-            repo.PlazasEstacionamiento.Add(pe);
-        }
-
-        public List<PlazaEstacionamiento> ObtenerPlazaEst(PlazaEstacionamiento pe)
+        public List<PlazaEstacionamiento> ObtenerPlazaEst()
         {
             return repo.PlazasEstacionamiento;
+        }
+
+        public ResponseWrapper<PlazaEstacionamiento> PlazaDisponible()
+        {
+            PlazaEstacionamiento plazaDisponible = repo.PlazasEstacionamiento.Where(x => x.Disponible == true).FirstOrDefault();
+            if (plazaDisponible != null)
+            {
+                return new ResponseWrapper<PlazaEstacionamiento>(plazaDisponible, false);
+            }  
+            else
+            {
+                return new ResponseWrapper<PlazaEstacionamiento>(true);
+            }
         }
     }
 }

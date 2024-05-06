@@ -23,5 +23,10 @@ namespace EstacionamientoMedido.Helpers
             Error = error;
             HayError= hayerror;
         }
+
+        public ResponseWrapper(bool hayerror)
+        {
+            HayError = hayerror;
+        }
     }
 }

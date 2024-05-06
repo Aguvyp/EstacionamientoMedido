@@ -15,18 +15,18 @@ namespace EstacionamientoMedido.Vistas
         public void MenuAMostrar()
         {
             int eleccion;
-            Console.WriteLine("1. Cargar cliente");
-            Console.WriteLine("2. Mostrar clientes cargados");
-            Console.WriteLine("3. Buscar cliente por DNI");
-            Console.WriteLine("4. Buscar cliente por Apellido");
-            Console.WriteLine("5. Eliminar cliente");
-            Console.WriteLine();
-            Console.WriteLine("6. Registrar vehiculo nuevo");
-            Console.WriteLine("7. Mostrar vehiculos registrados");
-            Console.WriteLine("8. Modificar vehiculo");
-            Console.WriteLine("9. Eliminar vehiculo");
-            Console.WriteLine("10. Buscar vehiculo por patente");
-            Console.WriteLine("-----------------------------------");
+            Console.WriteLine("***************** MENU *****************");
+            Console.WriteLine("| 1. Cargar cliente                    |");
+            Console.WriteLine("| 2. Mostrar clientes cargados         |");
+            Console.WriteLine("| 3. Buscar cliente por DNI            |");
+            Console.WriteLine("| 4. Buscar cliente por Apellido       |");
+            Console.WriteLine("| 5. Eliminar cliente                  |");
+            Console.WriteLine("| 6. Registrar vehiculo nuevo          |");
+            Console.WriteLine("| 7. Mostrar vehiculos registrados     |");
+            Console.WriteLine("| 8. Modificar vehiculo                |");
+            Console.WriteLine("| 9. Eliminar vehiculo                 |");
+            Console.WriteLine("| 10. Buscar vehiculo por patente      |");
+            Console.WriteLine("|______________________________________| ");
             //Console.WriteLine("5. Iniciar estacionamiento");
             //Console.WriteLine("6. Finalizar estacionamiento");
             //Console.WriteLine("7. Cerrar");

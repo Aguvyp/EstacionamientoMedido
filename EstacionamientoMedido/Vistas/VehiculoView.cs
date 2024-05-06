@@ -12,13 +12,13 @@ namespace EstacionamientoMedido.Vistas
     public class VehiculoView
     {
         VehiculoController vehiculoControlador = new VehiculoController();
+        ClienteController clienteController = new ClienteController();
 
         public void CargarDatosVehiculo()
         {
-            List<Cliente> listadoClientes = new List<Cliente>();
+            Vehiculo vehiculoNuevo = new Vehiculo();
 
             string dueñoMomentaneo;
-            Vehiculo vehiculoNuevo = new Vehiculo();
 
             Console.Write("Patente: ");
             vehiculoNuevo.Patente = Console.ReadLine();
@@ -31,9 +31,11 @@ namespace EstacionamientoMedido.Vistas
             Console.Write("Pertenece a: ");
             dueñoMomentaneo = Console.ReadLine();
 
+            List<Cliente>listadoClientes = clienteController.ObtenerClientes();
+
             foreach (var item in listadoClientes)
             {
-                if (dueñoMomentaneo == item.Nombre)
+                if (item.Nombre == dueñoMomentaneo)
                 {
                     vehiculoNuevo.Cliente = item;
                 }
@@ -46,18 +48,13 @@ namespace EstacionamientoMedido.Vistas
 
         public void MostrarVehiculosRegistrados()
         {
-            List<Vehiculo> listadoVehiculos = vehiculoControlador.ObtenerVehiculos(); ;
+            List<Vehiculo> listadoVehiculos = vehiculoControlador.ObtenerVehiculos();
 
             Console.WriteLine("Lista de vehiculos registrados");
 
-            foreach (var item in listadoVehiculos)
+            foreach (var v in listadoVehiculos)
             {
-               
-               if(item.Cliente.Nombre != "")
-                {
-                    Console.WriteLine($">Dueño: {item.Cliente.Nombre} - Patente: {item.Patente} - Marca: {item.Marca} - Modelo: {item.Modelo} - Color: {item.Color}");
-
-                }
+                Console.WriteLine($">Dueño: {v.Cliente.Nombre} - Patente: {v.Patente} - Marca: {v.Marca} - Modelo: {v.Modelo} - Color: {v.Color}");
             }
 
         }
