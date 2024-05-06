@@ -1,4 +1,5 @@
 ﻿using EstacionamientoMedido.Controladores;
+using EstacionamientoMedido.Helpers;
 using EstacionamientoMedido.Modelos;
 using System;
 using System.Collections.Generic;
@@ -43,23 +44,61 @@ namespace EstacionamientoMedido.Vistas
 
         }
 
-        void MostrarVehiculosRegistrados()
+        public void MostrarVehiculosRegistrados()
         {
-            List<Vehiculo> listadoVehiculos = new List<Vehiculo>();
+            List<Vehiculo> listadoVehiculos = vehiculoControlador.ObtenerVehiculos(); ;
 
             Console.WriteLine("Lista de vehiculos registrados");
 
-
             foreach (var item in listadoVehiculos)
             {
-                if (item.Cliente.Nombre != null)
+               
+               if(item.Cliente.Nombre != "")
                 {
                     Console.WriteLine($">Dueño: {item.Cliente.Nombre} - Patente: {item.Patente} - Marca: {item.Marca} - Modelo: {item.Modelo} - Color: {item.Color}");
-                }
 
+                }
             }
 
-            vehiculoControlador.ObtenerVehiculos();
+        }
+
+        public void MostrarUnVehiculo(Vehiculo v)
+        {
+            Console.WriteLine("Vehiculo encontrado");
+            Console.WriteLine($">Dueño: {v.Cliente.Nombre} - Patente: {v.Patente} - Marca: {v.Marca} - Modelo: {v.Modelo} - Color: {v.Color}");
+        }
+
+        public void ModificarVehiculo()
+        {
+            Vehiculo vehiculoNuevo = new Vehiculo();
+
+            Console.WriteLine("Patente del vehiculo a modificar: ");
+            vehiculoNuevo.Patente = Console.ReadLine();
+            vehiculoControlador.Modificar(vehiculoNuevo);
+            CargarDatosVehiculo();
+            Console.WriteLine("Vehiculo modificado con exito");
+
+        }
+
+        public void EliminarVehiculo()
+        {
+            Vehiculo vehiculoEliminar = new Vehiculo();
+
+            Console.WriteLine("Eliminar vehiculo por patente");
+            Console.Write("Patente: ");
+            vehiculoEliminar.Patente = Console.ReadLine();
+            vehiculoControlador.Eliminar(vehiculoEliminar);
+            Console.WriteLine("Vehiculo eliminado con exito");
+        }
+
+        public void BuscarVehiculoPorPatente()
+        {
+            Vehiculo buscado = new Vehiculo();
+            Console.WriteLine("Buscar vehiculo por patente");
+            Console.Write("Patente: ");
+            buscado.Patente = Console.ReadLine();
+            ResponseWrapper<Vehiculo> encontrado = vehiculoControlador.ObtenerVehiculoPorPatente(buscado.Patente);
+            MostrarUnVehiculo(encontrado.Respuesta);
 
         }
 

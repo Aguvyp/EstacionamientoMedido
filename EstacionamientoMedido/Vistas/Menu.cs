@@ -11,17 +11,25 @@ namespace EstacionamientoMedido.Vistas
     public class Menu
     {
         ClienteView clienteView = new ClienteView();
+        VehiculoView vehiculoView = new VehiculoView();
         public void MenuAMostrar()
         {
             int eleccion;
             Console.WriteLine("1. Cargar cliente");
             Console.WriteLine("2. Mostrar clientes cargados");
-            Console.WriteLine("3. Registrar vehiculo nuevo");
-            Console.WriteLine("4. Mostrar vehiculos registrados");
+            Console.WriteLine("3. Buscar cliente por DNI");
+            Console.WriteLine("4. Buscar cliente por Apellido");
+            Console.WriteLine("5. Eliminar cliente");
+            Console.WriteLine();
+            Console.WriteLine("6. Registrar vehiculo nuevo");
+            Console.WriteLine("7. Mostrar vehiculos registrados");
+            Console.WriteLine("8. Modificar vehiculo");
+            Console.WriteLine("9. Eliminar vehiculo");
+            Console.WriteLine("10. Buscar vehiculo por patente");
             Console.WriteLine("-----------------------------------");
-            Console.WriteLine("5. Iniciar estacionamiento");
-            Console.WriteLine("6. Finalizar estacionamiento");
-            Console.WriteLine("7. Cerrar");
+            //Console.WriteLine("5. Iniciar estacionamiento");
+            //Console.WriteLine("6. Finalizar estacionamiento");
+            //Console.WriteLine("7. Cerrar");
             Console.WriteLine();
             Console.Write("Opcion: ");
             eleccion = int.Parse(Console.ReadLine());
@@ -41,40 +49,60 @@ namespace EstacionamientoMedido.Vistas
                     MenuAMostrar();
                     break;
 
+
                 case 3:
-                    Vehiculo vehiculoTemporal = CargarDatosVehiculo(repo.Clientes);
-                    vehiculoControlador.CargarVehiculo(vehiculoTemporal);
+                    clienteView.ObtenerClientePorDNI();
                     Console.WriteLine();
                     MenuAMostrar();
                     break;
 
                 case 4:
-                    MostrarVehiculosRegistrados(vehiculoControlador.ObtenerVehiculos());
+                    clienteView.ObtenerPorApellido();
                     Console.WriteLine();
                     MenuAMostrar();
                     break;
 
                 case 5:
-                    List<Vehiculo> vehiculosCargados = vehiculoControlador.ObtenerVehiculos();
-                    Estacionamiento estacionamientoTemporal = IniciarEstacionamiento(vehiculosCargados, repo.PlazasEstacionamiento);
-                    estacionamientoController.GuardarEstacionamiento(estacionamientoTemporal);
-                    // Console.WriteLine($"Plaza: {estacionamientoTemporal.PlazaEstacionamiento.Nombre} | Patente: {estacionamientoTemporal.VehiculoEstacionado.Patente} | Dueño: {estacionamientoTemporal.VehiculoEstacionado.Cliente.Apellido}, {estacionamientoTemporal.VehiculoEstacionado.Cliente.Nombre} | Telefono: {estacionamientoTemporal.VehiculoEstacionado.Cliente.Telefono} \n" +
-                    //$"Marca: {estacionamientoTemporal.VehiculoEstacionado.Marca} | Modelo: {estacionamientoTemporal.VehiculoEstacionado.Modelo} | Color: {estacionamientoTemporal.VehiculoEstacionado.Color}");
+                    clienteView.EliminarClienteRegistrado();
                     Console.WriteLine();
                     MenuAMostrar();
                     break;
 
                 case 6:
-                    List<Estacionamiento> estacionamientosIniciados = estacionamientoController.ObtenerEstacionamiento();
-                    FinalizarEstacionamiento(estacionamientosIniciados);
+                    vehiculoView.CargarDatosVehiculo();
                     Console.WriteLine();
                     MenuAMostrar();
                     break;
 
+                case 7:
+                    vehiculoView.MostrarVehiculosRegistrados();
+                    Console.WriteLine();
+                    MenuAMostrar();
+                    break;
+
+                case 8:
+                    vehiculoView.ModificarVehiculo();
+                    Console.WriteLine();
+                    MenuAMostrar();
+                    break;
+
+                case 9:
+                    vehiculoView.EliminarVehiculo();
+                    Console.WriteLine();
+                    MenuAMostrar();
+                    break;
+
+                case 10:
+                    vehiculoView.BuscarVehiculoPorPatente();
+                    Console.WriteLine();
+                    MenuAMostrar();
+                    break;
 
                 default:
                     break;
 
             }
         }
+    }
 }
+

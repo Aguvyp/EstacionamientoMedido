@@ -21,10 +21,13 @@ namespace EstacionamientoMedido.Controladores
         {
             return repo.Clientes;
         }
+
         
         public Cliente Modificar(Cliente c)
         {
-            Cliente clienteDelete = repo.Clientes.Find(x => x.DNI == c.DNI); //Busco cliente con ese dni
+            Cliente clienteDelete = repo.Clientes
+                .Where(x => x.DNI == c.DNI)
+                .SingleOrDefault(); //Busco cliente con ese dni
             
             repo.Clientes.Remove(clienteDelete); //Lo elimino
             
@@ -34,10 +37,10 @@ namespace EstacionamientoMedido.Controladores
             return c;
         }
 
-        public void Elimianr(Cliente c) //No es conveniente borrar informacion, si deshabilitarlo.
+        public void Eliminar(Cliente c) //No es conveniente borrar informacion, si deshabilitarlo.
         {
             Cliente clienteDelete = repo.Clientes.Find(x => x.DNI == c.DNI); //Busco cliente con ese dni
-            repo.Clientes.Remove(c);
+            repo.Clientes.Remove(clienteDelete);
 
         }
 
@@ -47,7 +50,7 @@ namespace EstacionamientoMedido.Controladores
                 .Where(x => x.DNI ==  dni)
                 .SingleOrDefault();
 
-            if(clienteABuscar == null)
+            if(clienteABuscar == null || dni == "")
             {
                 return new ResponseWrapper<Cliente>("Cliente no encontrado", true);
                 
@@ -66,14 +69,14 @@ namespace EstacionamientoMedido.Controladores
                 .ToList();
 
 
-            if(respuesta != null)
+            if(respuesta == null || apellido == "" || respuesta.Count == 0)
             {
-                return new ResponseWrapper<List<Cliente>>(respuesta, false);
-                
+                return new ResponseWrapper<List<Cliente>>("No hay cliente con ese apellido", true);
             }
             else
             {
-                return new ResponseWrapper<List<Cliente>>("No hay cliente con ese apellido", true);
+                return new ResponseWrapper<List<Cliente>>(respuesta, false);
+                
             }
   
         }
