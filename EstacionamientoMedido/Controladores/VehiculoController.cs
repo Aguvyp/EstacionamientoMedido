@@ -1,24 +1,43 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using EstacionamientoMedido.Helpers;
 using EstacionamientoMedido.Modelos;
+using EstacionamientoMedido.Validations;
+using FluentValidation.Results;
+using ValidationResult = FluentValidation.Results.ValidationResult;
 
 namespace EstacionamientoMedido.Controladores
 {
     public class VehiculoController
     {
-        Repositorio repo = new Repositorio();
+        Repositorio repo = Repositorio.GetInstance();
 
         public void CargarVehiculo(Vehiculo v)
         {
-            repo.Vehiculos.Add(v);
+            VehiculoValidator validator = new VehiculoValidator();
+            ValidationResult result = validator.Validate(v);
+
+            if (result.IsValid)
+            {
+                repo.Vehiculos.Add(v);
+            }
+            else
+            {
+                foreach(var item in result.Errors)
+                {
+                    Console.WriteLine(item.ErrorMessage);
+                }
+            }
+            
         }
 
         public List<Vehiculo> ObtenerVehiculos()
         {
+
             return repo.Vehiculos;
         }
 
@@ -29,7 +48,21 @@ namespace EstacionamientoMedido.Controladores
                 .SingleOrDefault();
 
             repo.Vehiculos.Remove(vehiculoDelete);
-            repo.Vehiculos.Add(v);
+
+            VehiculoValidator validator = new VehiculoValidator();
+            ValidationResult result = validator.Validate(v);
+            if (result.IsValid) 
+            {
+                repo.Vehiculos.Add(v);
+            }
+            else
+            {
+                foreach (var item in result.Errors)
+                {
+                    Console.WriteLine(item.ErrorMessage);
+                }
+            }
+
 
             return v;
         }
@@ -43,27 +76,20 @@ namespace EstacionamientoMedido.Controladores
             repo.Vehiculos.Remove(vehiculoDelete);
         }
 
-        public ResponseWrapper<Vehiculo> ObtenerVehiculoPorPatente(string patente)
+        public Vehiculo ObtenerVehiculoPorPatente(string patente)
         {
-            Vehiculo vNuevo = new Vehiculo();
             Vehiculo vehiculoABuscar = repo.Vehiculos
                 .Where(x=> x.Patente ==  patente)
                 .SingleOrDefault();
 
-            if(vehiculoABuscar == null || patente == "")
-            {
-                Console.WriteLine("No hay vehiculo con esa patente, ingreselo");
-                Vehiculo aIngresar = new Vehiculo();
-                CargarVehiculo(aIngresar);
-
-                return new ResponseWrapper<Vehiculo>(aIngresar, false);
-            }
-            else
-            {
-                return new ResponseWrapper<Vehiculo>(vehiculoABuscar, false);
-            }
+            return vehiculoABuscar;
         }
-            
 
+        public bool ExistePatente(string patente)
+        {
+            bool resultado;
+            resultado = repo.Vehiculos.Any(x => x.Patente == patente);
+            return resultado;
+        }
     }
 }

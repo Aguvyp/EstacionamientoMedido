@@ -5,16 +5,35 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using EstacionamientoMedido.Validations;
+using System.ComponentModel.DataAnnotations;
+using FluentValidation.Results;
+using ValidationResult = FluentValidation.Results.ValidationResult;
+
 
 namespace EstacionamientoMedido.Controladores
 {
     public class ClienteController
     {
-        Repositorio repo = new Repositorio();
+        Repositorio repo = Repositorio.GetInstance();
 
         public void GuardarCliente(Cliente c)
         {
-            repo.Clientes.Add(c);
+            ClienteValidator validator = new ClienteValidator();
+            ValidationResult result = validator.Validate(c);
+            if(result.IsValid)
+            {
+                repo.Clientes.Add(c);
+            }
+            else
+            {
+                foreach (var item in result.Errors)
+                {
+                    Console.WriteLine(item.ErrorMessage);
+                }
+            }
+
+
         }
 
         public List<Cliente> ObtenerClientes()
@@ -30,8 +49,21 @@ namespace EstacionamientoMedido.Controladores
                 .SingleOrDefault(); //Busco cliente con ese dni
             
             repo.Clientes.Remove(clienteDelete); //Lo elimino
-            
-            repo.Clientes.Add(c); //Cargo el nuevo
+
+
+            ClienteValidator validator = new ClienteValidator();
+            ValidationResult result = validator.Validate(c);
+            if (result.IsValid)
+            {
+                repo.Clientes.Add(c);
+            }
+            else
+            {
+                foreach (var item in result.Errors)
+                {
+                    Console.WriteLine(item.ErrorMessage);
+                }
+            } //Cargo el nuevo
 
 
             return c;

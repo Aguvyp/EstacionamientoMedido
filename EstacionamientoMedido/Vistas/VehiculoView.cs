@@ -94,8 +94,8 @@ namespace EstacionamientoMedido.Vistas
             Console.WriteLine("Buscar vehiculo por patente");
             Console.Write("Patente: ");
             buscado.Patente = Console.ReadLine();
-            ResponseWrapper<Vehiculo> encontrado = vehiculoControlador.ObtenerVehiculoPorPatente(buscado.Patente);
-            MostrarUnVehiculo(encontrado.Respuesta);
+            //ResponseWrapper<Vehiculo> encontrado = vehiculoControlador.ObtenerVehiculoPorPatente(buscado.Patente);
+            //MostrarUnVehiculo(encontrado.Respuesta);
 
         }
 

@@ -4,21 +4,53 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using FluentValidation.Results;
 
 namespace EstacionamientoMedido.Controladores
 {
+    
     public class EstacionamientoController
     {  
-        Repositorio repo = new Repositorio();
+        Repositorio repo = Repositorio.GetInstance();
+        VehiculoController controladorVehiculo = new VehiculoController();
 
-        public void GuardarEstacionamiento(Estacionamiento e)
+        public void IniciarEstacionmiento(string patente)
         {
-            repo.Estacionamientos.Add(e);
+
+            Vehiculo vehiculo = controladorVehiculo.ObtenerVehiculoPorPatente(patente);
+
+            Estacionamiento estacionamiento = new Estacionamiento();
+            estacionamiento.Entrada = DateTime.Now;
+            estacionamiento.VehiculoEstacionado = vehiculo;
+
+            repo.Estacionamientos.Add(estacionamiento);
         }
 
-        public List<Estacionamiento> ObtenerEstacionamiento()
+        public Estacionamiento FinalizarEstacionamiento(string patente)
         {
-            return repo.Estacionamientos;
+            Estacionamiento aSalir = repo.Estacionamientos
+                .Where(x => x.VehiculoEstacionado.Patente == patente)
+                .OrderBy(x => x.Entrada)
+                .Single();
+
+            repo.Estacionamientos.Remove(aSalir);
+            aSalir.Salida = DateTime.Now;
+            
+            TimeSpan diferenciaTiempo = aSalir.Salida - aSalir.Entrada;
+            double horas = diferenciaTiempo.TotalHours;
+
+            if (horas < 1) 
+            {
+                aSalir.TotalEstacionamiento = aSalir.PrecioHora;
+            }
+            else
+            {
+                aSalir.TotalEstacionamiento = horas * aSalir.PrecioHora;
+            }
+
+            repo.Estacionamientos.Add(aSalir);
+       
+            return aSalir;
         }
     }
 }

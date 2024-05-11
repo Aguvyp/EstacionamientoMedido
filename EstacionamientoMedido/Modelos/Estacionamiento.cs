@@ -13,7 +13,7 @@ namespace EstacionamientoMedido.Modelos
         public PlazaEstacionamiento PlazaEstacionamiento { get; set; }
         public int PrecioHora { get; set; }
         public Vehiculo VehiculoEstacionado { get; set; }
-        public int TotalEstacionamiento { get; set; }
+        public double TotalEstacionamiento { get; set; }
 
 
         public Estacionamiento() 

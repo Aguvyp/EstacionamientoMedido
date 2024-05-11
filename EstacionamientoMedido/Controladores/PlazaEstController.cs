@@ -11,7 +11,7 @@ namespace EstacionamientoMedido.Controladores
 {
     public class PlazaEstController
     {
-        Repositorio repo = new Repositorio();
+        Repositorio repo = Repositorio.GetInstance();
 
         public List<PlazaEstacionamiento> ObtenerPlazaEst()
         {

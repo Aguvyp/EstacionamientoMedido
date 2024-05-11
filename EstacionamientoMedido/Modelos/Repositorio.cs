@@ -8,12 +8,38 @@ namespace EstacionamientoMedido.Modelos
 {
     public class Repositorio
     {
+        /*
+         * SINGLETON
+         * 1- Constructor Privado
+         * 2- Metodo para obtener instancia
+         * 3- El metodo y la instancia deben ser estatico
+         */
+
         public List<Cliente> Clientes = new List<Cliente>();
         public List<Vehiculo> Vehiculos = new List<Vehiculo>();
         public List<PlazaEstacionamiento> PlazasEstacionamiento = new List<PlazaEstacionamiento>();
         public List<Estacionamiento> Estacionamientos = new List<Estacionamiento>();
 
-        public Repositorio()
+        private static Repositorio Instancia;
+        private Repositorio()
+        {
+            PrecargarDatos();
+        }
+
+        //Patron de diseño SINGLETON
+        public static Repositorio GetInstance()
+        {
+            if(Instancia == null)
+            {
+                Instancia = new Repositorio();
+                return Instancia;
+            }
+            else
+            {
+                return Instancia;
+            }
+        }
+        private void PrecargarDatos()
         {
             Clientes.Add(new Cliente()
             {
