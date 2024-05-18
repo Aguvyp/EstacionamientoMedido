@@ -66,7 +66,8 @@ namespace EstacionamientoMedido.Vistas
             }
             else
             {
-                foreach(var item in estacionamientos)
+                Console.WriteLine("Lista de estacionamientos");
+                foreach (var item in estacionamientos)
                 {
                     if(item.Estado == Enumeraciones.EnumEstacionamiento.Activo)
                     {

@@ -33,23 +33,7 @@ namespace EstacionamientoMedido.Controladores
                 .Single();
 
             repo.Estacionamientos.Remove(aSalir);
-            aSalir.Salida = DateTime.Now;
-            
-            
-            TimeSpan diferenciaTiempo = aSalir.Salida - aSalir.Entrada;
-            double horas = diferenciaTiempo.TotalHours;
-
-            if (horas < 1) 
-            {
-                aSalir.TotalEstacionamiento = aSalir.PrecioHora;
-            }
-            else
-            {
-                aSalir.TotalEstacionamiento = horas * aSalir.PrecioHora;
-            }
-
-            aSalir.Estado = Enumeraciones.EnumEstacionamiento.Terminado;
-
+            aSalir.SalidaEstacionamiento();
             repo.Estacionamientos.Add(aSalir);
        
             return aSalir;
