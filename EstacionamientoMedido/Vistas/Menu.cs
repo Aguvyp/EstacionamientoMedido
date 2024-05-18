@@ -17,8 +17,11 @@ namespace EstacionamientoMedido.Vistas
         {
             int eleccion;
             Console.WriteLine("***************** MENU *****************");
+            Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("| 1. Iniciar estacionamiento           |");
+            Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine("| 2. Finalizar estacionamiento         |");
+           Console.ForegroundColor = ConsoleColor.White;
             Console.WriteLine("| ------------------------------------ |");
             Console.WriteLine("| 3. Cargar cliente                    |");
             Console.WriteLine("| 4. Mostrar clientes cargados         |");
