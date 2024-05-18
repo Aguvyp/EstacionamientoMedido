@@ -18,23 +18,26 @@ namespace EstacionamientoMedido.Vistas
             int eleccion;
             Console.WriteLine("***************** MENU *****************");
             Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine("| 1. Iniciar estacionamiento           |");
+            Console.WriteLine("| 1. Iniciar estacionamiento            |");
             Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine("| 2. Finalizar estacionamiento         |");
+            Console.WriteLine("| 2. Finalizar estacionamiento          |");
            Console.ForegroundColor = ConsoleColor.White;
-            Console.WriteLine("| ------------------------------------ |");
-            Console.WriteLine("| 3. Cargar cliente                    |");
-            Console.WriteLine("| 4. Mostrar clientes cargados         |");
-            Console.WriteLine("| 5. Buscar cliente por DNI            |");
-            Console.WriteLine("| 6. Buscar cliente por Apellido       |");
-            Console.WriteLine("| 7. Eliminar cliente                  |");
-            Console.WriteLine("| ------------------------------------ |");
-            Console.WriteLine("| 8. Registrar vehiculo nuevo          |");
-            Console.WriteLine("| 9. Mostrar vehiculos registrados     |");
-            Console.WriteLine("| 10. Modificar vehiculo               |");
-            Console.WriteLine("| 11. Eliminar vehiculo                |");
-            Console.WriteLine("| 12. Buscar vehiculo por patente      |");
-            Console.WriteLine("|______________________________________| ");
+            Console.WriteLine("| 3. Mostrar estacionamientos   |");
+            Console.WriteLine("| 4. Buscar estacionamiento por patente |");
+            Console.WriteLine("| --------------------------------------|");
+            Console.WriteLine("| 5. Cargar cliente                     |");
+            Console.WriteLine("| 6. Mostrar clientes cargados          |");
+            Console.WriteLine("| 7. Buscar cliente por DNI             |");
+            Console.WriteLine("| 8. Buscar cliente por Apellido        |");
+            Console.WriteLine("| 9. Eliminar cliente                   |");
+            Console.WriteLine("| --------------------------------------|");
+            Console.WriteLine("| 10. Registrar vehiculo nuevo          |");
+            Console.WriteLine("| 11. Mostrar vehiculos registrados     |");
+            Console.WriteLine("| 12. Modificar vehiculo                |");
+            Console.WriteLine("| 13. Eliminar vehiculo                 |");
+            Console.WriteLine("| 14. Buscar vehiculo por patente       |");
+            Console.WriteLine("| 15. Salir                             |");
+            Console.WriteLine("|_______________________________________| ");
             //Console.WriteLine("5. Iniciar estacionamiento");
             //Console.WriteLine("6. Finalizar estacionamiento");
             //Console.WriteLine("7. Cerrar");
@@ -58,67 +61,80 @@ namespace EstacionamientoMedido.Vistas
                     break;
 
                 case 3:
-                    clienteView.CargarDatosCliente();
+                    estacionamientoView.VerEstacionamientos();
                     Console.WriteLine();
                     MenuAMostrar();
                     break;
 
                 case 4:
-                    clienteView.MostrarClientesRegistrados();
+                    estacionamientoView.VerEstacionamientosFiltrados();
                     Console.WriteLine();
                     MenuAMostrar();
                     break;
 
 
                 case 5:
-                    clienteView.ObtenerClientePorDNI();
+                    clienteView.CargarDatosCliente();
                     Console.WriteLine();
                     MenuAMostrar();
                     break;
 
                 case 6:
-                    clienteView.ObtenerPorApellido();
+                    clienteView.MostrarClientesRegistrados();
                     Console.WriteLine();
                     MenuAMostrar();
                     break;
 
+
                 case 7:
-                    clienteView.EliminarClienteRegistrado();
+                    clienteView.ObtenerClientePorDNI();
                     Console.WriteLine();
                     MenuAMostrar();
                     break;
 
                 case 8:
-                    vehiculoView.CargarDatosVehiculo();
+                    clienteView.ObtenerPorApellido();
                     Console.WriteLine();
                     MenuAMostrar();
                     break;
 
                 case 9:
-                    vehiculoView.MostrarVehiculosRegistrados();
+                    clienteView.EliminarClienteRegistrado();
                     Console.WriteLine();
                     MenuAMostrar();
                     break;
 
                 case 10:
-                    vehiculoView.ModificarVehiculo();
+                    vehiculoView.CargarDatosVehiculo();
                     Console.WriteLine();
                     MenuAMostrar();
                     break;
 
                 case 11:
-                    vehiculoView.EliminarVehiculo();
+                    vehiculoView.MostrarVehiculosRegistrados();
                     Console.WriteLine();
                     MenuAMostrar();
                     break;
 
                 case 12:
-                    vehiculoView.BuscarVehiculoPorPatente();
+                    vehiculoView.ModificarVehiculo();
                     Console.WriteLine();
                     MenuAMostrar();
                     break;
 
                 case 13:
+                    vehiculoView.EliminarVehiculo();
+                    Console.WriteLine();
+                    MenuAMostrar();
+                    break;
+
+                case 14:
+                    vehiculoView.BuscarVehiculoPorPatente();
+                    Console.WriteLine();
+                    MenuAMostrar();
+                    break;
+
+                case 15:
                     Environment.Exit(0);
                     break;
 

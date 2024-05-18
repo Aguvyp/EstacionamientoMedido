@@ -13,15 +13,14 @@ namespace EstacionamientoMedido.Controladores
     {  
         Repositorio repo = Repositorio.GetInstance();
         VehiculoController controladorVehiculo = new VehiculoController();
+        private const int PrecioHora = 0;
 
         public void IniciarEstacionmiento(string patente)
         {
 
             Vehiculo vehiculo = controladorVehiculo.ObtenerVehiculoPorPatente(patente);
 
-            Estacionamiento estacionamiento = new Estacionamiento();
-            estacionamiento.Entrada = DateTime.Now;
-            estacionamiento.VehiculoEstacionado = vehiculo;
+            Estacionamiento estacionamiento = new Estacionamiento(vehiculo, PrecioHora);
 
             repo.Estacionamientos.Add(estacionamiento);
         }
@@ -36,6 +35,7 @@ namespace EstacionamientoMedido.Controladores
             repo.Estacionamientos.Remove(aSalir);
             aSalir.Salida = DateTime.Now;
             
+            
             TimeSpan diferenciaTiempo = aSalir.Salida - aSalir.Entrada;
             double horas = diferenciaTiempo.TotalHours;
 
@@ -48,9 +48,37 @@ namespace EstacionamientoMedido.Controladores
                 aSalir.TotalEstacionamiento = horas * aSalir.PrecioHora;
             }
 
+            aSalir.Estado = Enumeraciones.EnumEstacionamiento.Terminado;
+
             repo.Estacionamientos.Add(aSalir);
        
             return aSalir;
+        }
+
+        public List<Estacionamiento> ObtenerEstacionamientos()
+        {
+            return repo.Estacionamientos;
+        }
+
+        public List<Estacionamiento>ObtenerEstacionamientosPorPatente(string patente)
+        {
+            List<Estacionamiento> listaEstacionamientos = repo.Estacionamientos
+                .Where(x => x.VehiculoEstacionado.Patente == patente)
+                .ToList();
+
+            return listaEstacionamientos;
+        }
+
+        public bool YaEstaEstacionado(string patente)
+        {
+            bool resultado;
+
+            resultado = repo.Estacionamientos
+                .Where(x => x.VehiculoEstacionado.Patente == patente)
+                .Where(x => x.Estado == Enumeraciones.EnumEstacionamiento.Activo)
+                .Any();
+
+            return resultado;
         }
     }
 }

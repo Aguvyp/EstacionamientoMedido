@@ -90,13 +90,13 @@ namespace EstacionamientoMedido.Vistas
 
         public void BuscarVehiculoPorPatente()
         {
-            Vehiculo buscado = new Vehiculo();
-            Console.WriteLine("Buscar vehiculo por patente");
-            Console.Write("Patente: ");
-            buscado.Patente = Console.ReadLine();
-            //ResponseWrapper<Vehiculo> encontrado = vehiculoControlador.ObtenerVehiculoPorPatente(buscado.Patente);
-            //MostrarUnVehiculo(encontrado.Respuesta);
+            string patenteMomentanea;
+            Console.Write("Ingrese patente del vehiculo estacionado:");
+            patenteMomentanea = Console.ReadLine();
 
+            Vehiculo vehiculoFiltrado = vehiculoControlador.ObtenerVehiculoPorPatente(patenteMomentanea);
+
+            Console.WriteLine($"Marca: {vehiculoFiltrado.Marca} - Modelo: {vehiculoFiltrado.Modelo} - Color: {vehiculoFiltrado.Color} - Dueño: {vehiculoFiltrado.Cliente.Nombre}");
         }
 
     }

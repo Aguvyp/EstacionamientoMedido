@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EstacionamientoMedido.Enumeraciones;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,14 +13,17 @@ namespace EstacionamientoMedido.Modelos
         public DateTime Salida { get; set; }
         public PlazaEstacionamiento PlazaEstacionamiento { get; set; }
         public int PrecioHora { get; set; }
+        public EnumEstacionamiento Estado { get; set; }
         public Vehiculo VehiculoEstacionado { get; set; }
         public double TotalEstacionamiento { get; set; }
 
 
-        public Estacionamiento() 
-        { 
+        public Estacionamiento(Vehiculo vehiculo, int preciohora) 
+        {
+            Estado = EnumEstacionamiento.Activo;
+            VehiculoEstacionado = vehiculo;
             Entrada = DateTime.Now;
-            PrecioHora = 3500;
+            PrecioHora = preciohora;
         }
     }
 }
