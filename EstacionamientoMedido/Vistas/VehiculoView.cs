@@ -17,8 +17,7 @@ namespace EstacionamientoMedido.Vistas
         public void CargarDatosVehiculo()
         {
             Vehiculo vehiculoNuevo = new Vehiculo();
-
-            string dueñoMomentaneo;
+            Cliente cliente = new Cliente();
 
             Console.Write("Patente: ");
             vehiculoNuevo.Patente = Console.ReadLine();
@@ -28,20 +27,22 @@ namespace EstacionamientoMedido.Vistas
             vehiculoNuevo.Modelo = Console.ReadLine();
             Console.Write("Color: ");
             vehiculoNuevo.Color = Console.ReadLine();
-            Console.Write("Pertenece a: ");
-            dueñoMomentaneo = Console.ReadLine();
+            Console.Write("Nombre del dueño: ");
+            cliente.Nombre = Console.ReadLine();
+            Console.Write("Apellido del dueño:");
+            cliente.Apellido = Console.ReadLine();
+            Console.Write("DNI:");
+            cliente.DNI = Console.ReadLine();
+            Console.Write("Telefono: ");
+            cliente.Telefono = Console.ReadLine();
+            Console.Write("Email: ");
+            cliente.Email = Console.ReadLine();
 
-            List<Cliente>listadoClientes = clienteController.ObtenerClientes();
-
-            foreach (var item in listadoClientes)
+            if (!clienteController.ExisteCliente(cliente.DNI))
             {
-                if (item.Nombre == dueñoMomentaneo)
-                {
-                    vehiculoNuevo.Cliente = item;
-                }
-
+                clienteController.GuardarCliente(cliente);
             }
-
+            
             vehiculoControlador.CargarVehiculo(vehiculoNuevo);
 
         }

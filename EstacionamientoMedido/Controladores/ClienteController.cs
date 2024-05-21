@@ -9,6 +9,7 @@ using EstacionamientoMedido.Validations;
 using System.ComponentModel.DataAnnotations;
 using FluentValidation.Results;
 using ValidationResult = FluentValidation.Results.ValidationResult;
+using System.Security.Cryptography.X509Certificates;
 
 
 namespace EstacionamientoMedido.Controladores
@@ -41,7 +42,16 @@ namespace EstacionamientoMedido.Controladores
             return repo.Clientes;
         }
 
-        
+        public bool ExisteCliente(string dni)
+        {
+            bool resultado;
+
+            resultado = repo.Clientes
+                .Where(x => x.DNI.Equals(dni))
+                .Any();
+
+            return resultado;
+        }
         public Cliente Modificar(Cliente c)
         {
             Cliente clienteDelete = repo.Clientes
