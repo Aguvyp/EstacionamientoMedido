@@ -11,5 +11,10 @@ namespace EstacionamientoMedido.Modelos
         public string Nombre { get; set; }
         public bool Disponible { get; set; }
 
+        public PlazaEstacionamiento()
+        {
+            Disponible = true;
+        }
+
     }
 }

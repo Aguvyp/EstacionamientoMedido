@@ -13,22 +13,22 @@ namespace EstacionamientoMedido.Controladores
     {
         Repositorio repo = Repositorio.GetInstance();
 
+        public void CargarPlaza(PlazaEstacionamiento plazaNueva)
+        {
+           repo.PlazasEstacionamiento.Add(plazaNueva);
+        }
         public List<PlazaEstacionamiento> ObtenerPlazaEst()
         {
             return repo.PlazasEstacionamiento;
         }
 
-        public ResponseWrapper<PlazaEstacionamiento> PlazaDisponible()
+        public List<PlazaEstacionamiento> PlazasDisponibles()
         {
-            PlazaEstacionamiento plazaDisponible = repo.PlazasEstacionamiento.Where(x => x.Disponible == true).FirstOrDefault();
-            if (plazaDisponible != null)
-            {
-                return new ResponseWrapper<PlazaEstacionamiento>(plazaDisponible, false);
-            }  
-            else
-            {
-                return new ResponseWrapper<PlazaEstacionamiento>(true);
-            }
+            List<PlazaEstacionamiento> plazasDisponibles = repo.PlazasEstacionamiento
+                .Where(x => x.Disponible == true)
+                .ToList();
+
+            return plazasDisponibles;
         }
     }
 }

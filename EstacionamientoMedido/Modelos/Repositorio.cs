@@ -57,33 +57,7 @@ namespace EstacionamientoMedido.Modelos
                 Telefono = "654321",
                 Email = "estesitiene@gmail.com",
             });
-
-            PlazasEstacionamiento.Add(new PlazaEstacionamiento()
-            {
-                Nombre = "A",
-                Disponible = true
-            }); 
-            PlazasEstacionamiento.Add(new PlazaEstacionamiento()
-            {
-                Nombre = "B",
-                Disponible = true
-            });
-            PlazasEstacionamiento.Add(new PlazaEstacionamiento()
-            {
-                Nombre = "C",
-                Disponible = true
-            });
-            PlazasEstacionamiento.Add(new PlazaEstacionamiento()
-            {
-                Nombre = "D",
-                Disponible = true
-            });
-            PlazasEstacionamiento.Add(new PlazaEstacionamiento()
-            {
-                Nombre = "E",
-                Disponible = true
-            });
-            
+      
 
 
         }

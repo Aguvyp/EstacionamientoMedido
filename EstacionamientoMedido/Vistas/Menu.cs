@@ -13,6 +13,7 @@ namespace EstacionamientoMedido.Vistas
         ClienteView clienteView = new ClienteView();
         VehiculoView vehiculoView = new VehiculoView();
         EstacionamientoView estacionamientoView = new EstacionamientoView();
+        PlazaEstacionamientoView plazaView = new PlazaEstacionamientoView();
         public void MenuAMostrar()
         {
             int eleccion;
@@ -35,7 +36,11 @@ namespace EstacionamientoMedido.Vistas
             Console.WriteLine("| 11. Modificar vehiculo                |");
             Console.WriteLine("| 12. Eliminar vehiculo                 |");
             Console.WriteLine("| 13. Buscar vehiculo por patente       |");
-            Console.WriteLine("| 14. Salir                             |");
+            Console.WriteLine("|---------------------------------------|");
+            Console.WriteLine("| 14. Cargar plazas                     |");
+            Console.WriteLine("| 15. Mostrar plazas cargadas           |");
+            Console.WriteLine("|---------------------------------------|");
+            Console.WriteLine("| 16. Salir                             |");
             Console.WriteLine("|_______________________________________| ");
             //Console.WriteLine("5. Iniciar estacionamiento");
             //Console.WriteLine("6. Finalizar estacionamiento");
@@ -128,6 +133,18 @@ namespace EstacionamientoMedido.Vistas
                     break;
 
                 case 14:
+                    plazaView.CargarPlazaEstacionamiento();
+                    Console.WriteLine();
+                    MenuAMostrar();
+                    break;
+
+                case 15:
+                    plazaView.ObtenerPlazasCargadas();
+                    Console.WriteLine();
+                    MenuAMostrar();
+                    break;
+
+                case 16:
                     Environment.Exit(0);
                     break;
 

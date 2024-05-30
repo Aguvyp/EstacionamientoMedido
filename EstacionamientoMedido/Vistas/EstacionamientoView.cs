@@ -13,31 +13,56 @@ namespace EstacionamientoMedido.Vistas
         EstacionamientoController controladorEstacionamiento = new EstacionamientoController();
         VehiculoController controladorVehiculo = new VehiculoController();
         VehiculoView vistaVehiculo = new VehiculoView();
+        PlazaEstController controladorPlazaEst = new PlazaEstController();
+        PlazaEstacionamientoView viewPlaza = new PlazaEstacionamientoView();
+        Repositorio repo = Repositorio.GetInstance();
         public void IniciarEstacionamiento()
         {
-            Console.Write("Ingrese patente de entrada: ");
-            string patente = Console.ReadLine();
-
-            if (!controladorVehiculo.ExistePatente(patente))
+            if(repo.PlazasEstacionamiento.Count == 0)
             {
-                Console.WriteLine("Vehiculo no registrado, hagalo a continuacion");
-                vistaVehiculo.CargarDatosVehiculo();
-            }
-
-            if (controladorEstacionamiento.YaEstaEstacionado(patente))
-            {
-                Console.WriteLine();
-                Console.WriteLine("El vehiculo ya esta estacionado");
-                Console.WriteLine();
+                Console.WriteLine("No hay plazas cargadas, carguelas a continuacion");
+                viewPlaza.CargarPlazaEstacionamiento();
             }
             else
             {
-                controladorEstacionamiento.IniciarEstacionmiento(patente);
-                Console.WriteLine("Estacionamiento iniciado con exito");
-            }
-           
 
-            
+                Console.Write("Ingrese patente de entrada: ");
+                string patente = Console.ReadLine();
+                string plazaMomentanea;
+                PlazaEstacionamiento plazaSelect;
+
+                if (!controladorVehiculo.ExistePatente(patente))
+                {
+                    Console.WriteLine("Vehiculo no registrado, hagalo a continuacion");
+                    vistaVehiculo.CargarDatosVehiculo();
+                }
+
+                if (controladorEstacionamiento.YaEstaEstacionado(patente))
+                {
+                    Console.WriteLine();
+                    Console.WriteLine("El vehiculo ya esta estacionado");
+                    Console.WriteLine();
+                }
+                else
+                {
+                    Console.WriteLine("Plazas disponibles a elegir");
+                    List<PlazaEstacionamiento> plazasEst = controladorPlazaEst.PlazasDisponibles();
+
+                    foreach (var item in plazasEst)
+                    {
+                        Console.WriteLine($"{item.Nombre}");
+                    }
+
+                    Console.Write("Plaza elegida: ");
+                    plazaMomentanea = Console.ReadLine();
+                    plazaSelect = controladorEstacionamiento.AsignarPlaza(plazaMomentanea);
+                    controladorEstacionamiento.IniciarEstacionmiento(patente, plazaSelect);
+                    Console.WriteLine("Estacionamiento iniciado con exito");
+                }
+
+            }
+
+
         }
 
         public void FinalizarEstacionamiento()
@@ -77,7 +102,7 @@ namespace EstacionamientoMedido.Vistas
                     {
                         Console.ForegroundColor = ConsoleColor.Red;
                     }
-                    Console.WriteLine($"Patente: {item.VehiculoEstacionado.Patente} - {item.Entrada}/{item.Salida}");
+                    Console.WriteLine($"Patente: {item.VehiculoEstacionado.Patente} - {item.Entrada}/{item.Salida} - Plaza: {item.PlazaEstacionamiento.Nombre}");
                     Console.ForegroundColor = ConsoleColor.White;
                 }
             }
